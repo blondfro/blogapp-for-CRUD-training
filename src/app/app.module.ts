@@ -9,6 +9,8 @@ import { HomeComponent } from './home/home.component';
 import { ArticleService } from './article.service';
 import {HttpModule} from '@angular/http';
 import { ArticleComponent } from './article/article.component';
+import { CreateComponent } from './create/create.component';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 
 @NgModule({
@@ -16,12 +18,15 @@ import { ArticleComponent } from './article/article.component';
     AppComponent,
     HeaderComponent,
     HomeComponent,
-    ArticleComponent
+    ArticleComponent,
+    CreateComponent
   ],
   imports: [
     BrowserModule,
     HttpModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [ArticleService],
   bootstrap: [AppComponent]
