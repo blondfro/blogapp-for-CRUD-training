@@ -35,4 +35,9 @@ export class ArticleService {
       .map(result => this.result = result.json());
   }
 
+  deleteArticle(id) {
+    return this.http.get('/api/delete/' + id)
+      .map(result => this.result = result.json());
+  }
+
 }
