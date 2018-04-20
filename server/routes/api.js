@@ -50,4 +50,21 @@ router.post('/create', function (req, res) {
   })
 });
 
+router.post('/update/:id', function (req, res) {
+  console.log('Updating an Article');
+
+  article.findById(req.params.id)
+    .exec(function (err, article) {
+      if (err) {
+        console.log('Could not find the article');
+      } else {
+        article.title = req.body.title;
+        article.content = req.body.content;
+        article.save();
+        res.json(article);
+      }
+    })
+
+});
+
 module.exports = router;

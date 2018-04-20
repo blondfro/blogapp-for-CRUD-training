@@ -1,5 +1,5 @@
 <div class="article-container">
-  <form [formGroup]="articleForm" (ngSubmit)="addArticle(articleForm.value)" *ngIf = "articleForm">
+  <form [formGroup]="articleForm" (ngSubmit)="addArticle(article, articleForm.value)" *ngIf = "articleForm">
     <div class="row expanded">
       <div class="small-12 columns">
         <label>Article Title

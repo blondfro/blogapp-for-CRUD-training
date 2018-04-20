@@ -13,6 +13,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 export class CreateComponent implements OnInit {
   articleForm: FormGroup;
   articles: Array<Article>;
+  article: Article;
 
   constructor(private router: Router,
               private activatedRoute: ActivatedRoute,
@@ -23,20 +24,46 @@ export class CreateComponent implements OnInit {
     this.articleService.getArticles()
       .subscribe(res => this.articles = res);
 
-    this.articleForm = this.formBuilder.group({
-      'title': [null, Validators.compose([Validators.required,
-        Validators.minLength(10), Validators.maxLength(45)])],
-      'content': [null, Validators.compose([Validators.required,
-        Validators.minLength(10)])]
+    this.activatedRoute.params.subscribe((params) => {
+      if (params['id']) {
+        this.articleService.getArticle(params['id'])
+          .subscribe(res => {
+            this.article = res;
+
+            this.articleForm = this.formBuilder.group({
+              'title': [this.article['title'], Validators.compose([Validators.required,
+                Validators.minLength(10), Validators.maxLength(45)])],
+              'content': [this.article['content'], Validators.compose([Validators.required,
+                Validators.minLength(10)])]
+            });
+          });
+      } else {
+        this.articleForm = this.formBuilder.group({
+          'title': [null, Validators.compose([Validators.required,
+            Validators.minLength(10), Validators.maxLength(45)])],
+          'content': [null, Validators.compose([Validators.required,
+            Validators.minLength(10)])]
+        });
+      }
     });
+
+
   }
 
-  addArticle(article: Article) {
-    this.articleService.insertArticle(article)
-      .subscribe(newArticle => {
-        this.articles.push(newArticle);
-        this.router.navigateByUrl('/');
-      });
+  addArticle(articleId, article: Article) {
+
+    if (articleId != undefined) {
+      this.articleService.updateArticle(article, articleId._id)
+        .subscribe(updateArticle => {
+          this.router.navigateByUrl('/');
+        });
+    } else {
+        this.articleService.insertArticle(article)
+          .subscribe(newArticle => {
+            this.articles.push(newArticle);
+            this.router.navigateByUrl('/');
+          });
+    }
   }
 
 }

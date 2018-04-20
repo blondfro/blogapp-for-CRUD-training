@@ -7,7 +7,8 @@ import {CreateComponent} from './create/create.component';
 const routes: Routes = [
   {path: '', component: HomeComponent},
   {path: 'articles/:id', component: ArticleComponent},
-  {path: 'create', component: CreateComponent}
+  {path: 'create', component: CreateComponent},
+  {path: 'edit/:id', component: CreateComponent}
 ];
 
 @NgModule({

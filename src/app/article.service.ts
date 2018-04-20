@@ -27,4 +27,12 @@ export class ArticleService {
       .map(result => this.result = result.json());
   }
 
+  updateArticle(post: Article, id) {
+    let headers = new Headers({'Content-Type': 'application/json'});
+    let options = new RequestOptions({headers: headers});
+
+    return this.http.post('/api/update/' + id, JSON.stringify(post), options)
+      .map(result => this.result = result.json());
+  }
+
 }
